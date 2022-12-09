@@ -3,8 +3,6 @@ package controller;
 import land.DatabaseController;
 import model.Schueler;
 
-import java.util.Arrays;
-
 public class ProgramController {
 
     private final controller.ViewController vc;
@@ -65,5 +63,13 @@ public class ProgramController {
 
     public boolean isStringValid(String s) {
         return s.matches("[a-zA-Z0-9]+");
+    }
+
+    public void resetSchueler() {
+        schueler = null;
+    }
+
+    public Schueler getSchueler() {
+        return schueler;
     }
 }

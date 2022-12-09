@@ -26,14 +26,13 @@ public class ViewController {
         this.loading = new LoadingPanel();
         this.login = new LoginPanel(this, pc);
         this.signUp = new SignUpPanel(this, pc);
-        this.mainMenu = new MainMenuPanel();
+        this.mainMenu = new MainMenuPanel(this, pc);
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(loading.getPane());
         frame.pack();
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(800,500));
-        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
     }
 
