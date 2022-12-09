@@ -32,7 +32,7 @@
             </constraints>
             <properties>
               <text value=""/>
-              <toolTipText value="Username"/>
+              <toolTipText value="First 4 letters of your last name + first 4 letters of your first name (lowercase)"/>
             </properties>
           </component>
           <component id="124e2" class="javax.swing.JPasswordField" binding="passwordPasswordField" default-binding="true">
@@ -43,7 +43,7 @@
             </constraints>
             <properties>
               <text value=""/>
-              <toolTipText value="Password"/>
+              <toolTipText value=""/>
             </properties>
           </component>
           <component id="48982" class="javax.swing.JButton" binding="signInButton">

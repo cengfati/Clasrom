@@ -19,6 +19,7 @@ public class LoginPanel {
         errorLabel.setForeground(Color.RED);
 
         ActionListener loginListener = e -> {
+            errorLabel.setText("");
             pc.login(usernameTextField.getText(), passwordPasswordField.getPassword());
         };
 
@@ -29,7 +30,8 @@ public class LoginPanel {
         signInButton.addActionListener(e -> vc.setSignUpPanel());
     }
 
-    public Container getPanel() {
+    public JPanel getPanel() {
+        errorLabel.setText("");
         return panel;
     }
 

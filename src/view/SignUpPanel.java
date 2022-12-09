@@ -11,22 +11,24 @@ import java.util.Arrays;
 public class SignUpPanel {
 
     private JPanel panel1;
-    private JTextField usernameTextField;
+    private JTextField firstNameTextField;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
     private JLabel errorLabel;
     private JButton goBackButton;
     private JButton confirmButton;
+    private JTextField lastNameTextField;
 
     public SignUpPanel(ViewController vc, ProgramController pc) {
         errorLabel.setForeground(Color.RED);
 
-        ActionListener signInListener = e -> {
-            if(!usernameTextField.getText().isBlank() && passwordField1.getPassword().length != 0 && passwordField2.getPassword().length != 0 ) {
+        ActionListener signUpListener = e -> {
+            if(!firstNameTextField.getText().isBlank() && !lastNameTextField.getText().isBlank() && passwordField1.getPassword().length != 0 && passwordField2.getPassword().length != 0 ) {
                 if (Arrays.equals(passwordField1.getPassword(), passwordField2.getPassword())) {
-                    if (new String(passwordField1.getPassword()).matches("[a-zA-Z]+")) {
-                        if (passwordField1.getPassword().length > 5) {
-                            pc.signUp(usernameTextField.getText(), passwordField1.getPassword());
+                    if (new String(passwordField1.getPassword()).matches("[a-zA-Z0-9]+")) {
+                        if (passwordField1.getPassword().length > 4) {
+                            errorLabel.setText("");
+                            pc.signUp(firstNameTextField.getText(), lastNameTextField.getText(), passwordField1.getPassword());
                         } else {
                             errorLabel.setText("Your password needs to be at least 5 letters long.");
                         }
@@ -37,19 +39,21 @@ public class SignUpPanel {
                     errorLabel.setText("The passwords do not match.");
                 }
             } else {
-                errorLabel.setText("Please enter a username and password");
+                errorLabel.setText("Please enter your name and a password");
             }
         };
 
-        confirmButton.addActionListener(signInListener);
-        passwordField1.addActionListener(signInListener);
-        passwordField2.addActionListener(signInListener);
-        usernameTextField.addActionListener(signInListener);
+        confirmButton.addActionListener(signUpListener);
+        passwordField1.addActionListener(signUpListener);
+        passwordField2.addActionListener(signUpListener);
+        firstNameTextField.addActionListener(signUpListener);
+        lastNameTextField.addActionListener(signUpListener);
 
         goBackButton.addActionListener(e -> vc.setLoginPanel());
     }
 
-    public Container getPanel() {
+    public JPanel getPanel() {
+        errorLabel.setText("");
         return panel1;
     }
 
