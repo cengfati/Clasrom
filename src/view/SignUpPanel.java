@@ -53,7 +53,6 @@ public class SignUpPanel {
     }
 
     public JPanel getPanel() {
-        errorLabel.setText("");
         return panel1;
     }
 

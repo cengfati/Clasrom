@@ -31,7 +31,6 @@ public class LoginPanel {
     }
 
     public JPanel getPanel() {
-        errorLabel.setText("");
         return panel;
     }
 

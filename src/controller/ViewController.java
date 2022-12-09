@@ -1,5 +1,6 @@
 package controller;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import view.LoadingPanel;
 import view.LoginPanel;
 import view.MainMenuPanel;
@@ -10,15 +11,18 @@ import java.awt.*;
 
 public class ViewController {
 
+    private final ProgramController pc;
     private final JFrame frame;
     private final LoadingPanel loading;
-    private final LoginPanel login;
-    private final SignUpPanel signUp;
+    private LoginPanel login;
+    private SignUpPanel signUp;
     private final MainMenuPanel mainMenu;
 
     public ViewController (ProgramController pc) {
-        this.frame = new JFrame();
+        FlatLightLaf.setup();
 
+        this.pc = pc;
+        this.frame = new JFrame();
         this.loading = new LoadingPanel();
         this.login = new LoginPanel(this, pc);
         this.signUp = new SignUpPanel(this, pc);
@@ -46,11 +50,13 @@ public class ViewController {
     }
 
     public void setLoginPanel() {
+        login = new LoginPanel(this, pc);
         frame.setContentPane(login.getPanel());
         frame.setVisible(true);
     }
 
     public void setSignUpPanel() {
+        signUp = new SignUpPanel(this, pc);
         frame.setContentPane(signUp.getPanel());
         frame.setVisible(true);
     }
