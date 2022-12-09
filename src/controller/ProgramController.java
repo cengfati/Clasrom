@@ -25,22 +25,36 @@ public class ProgramController {
         }
     }
 
-    public void login(String text, char[] password) {
-        System.out.printf("%s %s", text, Arrays.toString(password));
-    }
-
-    public void signIn(String user, char[] password) {
-        if(isUsernameValid(user)) {
-            dbc.executeStatement("SELECT SID FROM FLAN_Schueler WHERE SID = '" + user + "';");
-            if(dbc.getCurrentQueryResult().getRowCount() == 0) {
-                //TODO Finish this
+    public void login(String user, char[] password) {
+        if(isStringValid(user) && isStringValid(String.valueOf(password))) {
+            dbc.executeStatement("SELECT SID, Password FROM FLAN_Schueler");
+            boolean dataCorrect = false;
+            for (int i = 0; i < dbc.getCurrentQueryResult().getData().length; i++) {
+                if(user.equals(dbc.getCurrentQueryResult().getData()[i][0]) && String.valueOf(password).equals(dbc.getCurrentQueryResult().getData()[i][1])) {
+                    dataCorrect = true;
+                }
+            }
+            if(dataCorrect) {
+                System.exit(-1);
+                //TODO
             } else {
-                //TODO and this
+                vc.getLogin().getErrorLabel().setText("Wrong username or password");
             }
         }
     }
 
-    public boolean isUsernameValid(String user) {
-        return user.matches("[a-zA-Z0-9]+");
+    public void signUp(String user, char[] password) {
+        if(isStringValid(user)) {
+            dbc.executeStatement("SELECT SID FROM FLAN_Schueler WHERE SID = '" + user + "';");
+            if(dbc.getCurrentQueryResult().getRowCount() == 0) {
+                //TODO Finish this
+            } else {
+                vc.getSignUp().getErrorLabel().setText("Username already taken.");
+            }
+        }
+    }
+
+    public boolean isStringValid(String s) {
+        return s.matches("[a-zA-Z0-9]+");
     }
 }

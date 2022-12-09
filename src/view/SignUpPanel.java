@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
-public class SignInPanel {
+public class SignUpPanel {
 
     private JPanel panel1;
     private JTextField usernameTextField;
@@ -18,7 +18,7 @@ public class SignInPanel {
     private JButton goBackButton;
     private JButton confirmButton;
 
-    public SignInPanel(ViewController vc, ProgramController pc) {
+    public SignUpPanel(ViewController vc, ProgramController pc) {
         errorLabel.setForeground(Color.RED);
 
         ActionListener signInListener = e -> {
@@ -26,7 +26,7 @@ public class SignInPanel {
                 if (Arrays.equals(passwordField1.getPassword(), passwordField2.getPassword())) {
                     if (new String(passwordField1.getPassword()).matches("[a-zA-Z]+")) {
                         if (passwordField1.getPassword().length > 5) {
-                            pc.signIn(usernameTextField.getText(), passwordField1.getPassword());
+                            pc.signUp(usernameTextField.getText(), passwordField1.getPassword());
                         } else {
                             errorLabel.setText("Your password needs to be at least 5 letters long.");
                         }
@@ -51,5 +51,9 @@ public class SignInPanel {
 
     public Container getPanel() {
         return panel1;
+    }
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
     }
 }

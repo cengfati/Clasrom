@@ -13,8 +13,10 @@ public class LoginPanel {
     private JButton signInButton;
     private JPanel panel;
     private JButton loginButton;
+    private JLabel errorLabel;
 
     public LoginPanel(ViewController vc, ProgramController pc) {
+        errorLabel.setForeground(Color.RED);
 
         ActionListener loginListener = e -> {
             pc.login(usernameTextField.getText(), passwordPasswordField.getPassword());
@@ -24,10 +26,14 @@ public class LoginPanel {
         passwordPasswordField.addActionListener(loginListener);
         usernameTextField.addActionListener(loginListener);
 
-        signInButton.addActionListener(e -> vc.setSignInPanel());
+        signInButton.addActionListener(e -> vc.setSignUpPanel());
     }
 
     public Container getPanel() {
         return panel;
+    }
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
     }
 }

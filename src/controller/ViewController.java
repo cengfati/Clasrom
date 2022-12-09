@@ -2,7 +2,7 @@ package controller;
 
 import view.LoadingPanel;
 import view.LoginPanel;
-import view.SignInPanel;
+import view.SignUpPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,18 +12,14 @@ public class ViewController {
     private final JFrame frame;
     private final LoadingPanel loading;
     private final LoginPanel login;
-    private final SignInPanel signIn;
-
-    private final ProgramController pc;
+    private final SignUpPanel signUp;
 
     public ViewController (ProgramController pc) {
-        this.pc = pc;
-
         this.frame = new JFrame();
 
         this.loading = new LoadingPanel();
         this.login = new LoginPanel(this, pc);
-        this.signIn = new SignInPanel(this, pc);
+        this.signUp = new SignUpPanel(this, pc);
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(loading.getPane());
@@ -37,13 +33,21 @@ public class ViewController {
         return loading;
     }
 
+    public SignUpPanel getSignUp() {
+        return signUp;
+    }
+
+    public LoginPanel getLogin() {
+        return login;
+    }
+
     public void setLoginPanel() {
         frame.setContentPane(login.getPanel());
         frame.setVisible(true);
     }
 
-    public void setSignInPanel() {
-        frame.setContentPane(signIn.getPanel());
+    public void setSignUpPanel() {
+        frame.setContentPane(signUp.getPanel());
         frame.setVisible(true);
     }
 }
