@@ -23,7 +23,7 @@ public class SignUpPanel {
         errorLabel.setForeground(Color.RED);
 
         ActionListener signUpListener = e -> {
-            if(!firstNameTextField.getText().isBlank() && !lastNameTextField.getText().isBlank() && passwordField1.getPassword().length != 0 && passwordField2.getPassword().length != 0 ) {
+            if (!firstNameTextField.getText().isBlank() && !lastNameTextField.getText().isBlank() && passwordField1.getPassword().length != 0 && passwordField2.getPassword().length != 0) {
                 if (Arrays.equals(passwordField1.getPassword(), passwordField2.getPassword())) {
                     if (new String(passwordField1.getPassword()).matches("[a-zA-Z0-9]+")) {
                         if (passwordField1.getPassword().length > 4) {
@@ -59,4 +59,5 @@ public class SignUpPanel {
     public JLabel getErrorLabel() {
         return errorLabel;
     }
+
 }

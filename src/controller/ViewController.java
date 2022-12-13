@@ -1,13 +1,12 @@
 package controller;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import view.LoadingPanel;
-import view.LoginPanel;
-import view.MainMenuPanel;
-import view.SignUpPanel;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewController {
 
@@ -16,7 +15,9 @@ public class ViewController {
     private final LoadingPanel loading;
     private LoginPanel login;
     private SignUpPanel signUp;
-    private final MainMenuPanel mainMenu;
+    private MainMenuPanel mainMenu;
+
+    private YearOverviewPanel[] years;
 
     public ViewController (ProgramController pc) {
         FlatLightLaf.setup();
@@ -35,6 +36,7 @@ public class ViewController {
         frame.setMinimumSize(new Dimension(800,500));
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
     }
+
 
     public LoadingPanel getLoading() {
         return loading;
@@ -61,6 +63,7 @@ public class ViewController {
     }
 
     public void setMainMenu() {
+        mainMenu.setPanel(pc.getYears());
         frame.setContentPane(mainMenu.getPanel());
         frame.setVisible(true);
     }

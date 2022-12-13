@@ -37,4 +37,5 @@ public class LoginPanel {
     public JLabel getErrorLabel() {
         return errorLabel;
     }
+
 }
