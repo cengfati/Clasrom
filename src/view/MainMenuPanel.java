@@ -4,6 +4,7 @@ import controller.ProgramController;
 import controller.ViewController;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Arrays;
 
@@ -31,6 +32,7 @@ public class MainMenuPanel {
     }
 
     public void setPanel(YearOverviewPanel[] content) {
+        panel.setLayout(new GridLayout());
         for (YearOverviewPanel pane : content) {
             panel.add(pane.getPanel());
         }
