@@ -1,15 +1,9 @@
 package controller;
 
-import com.mysql.cj.QueryResult;
 import land.DatabaseController;
 import model.Schueler;
-import model.Tuple;
-import view.YearOverviewPanel;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProgramController {
@@ -29,6 +23,7 @@ public class ProgramController {
         if(dbc.connect()) {
             vc.getLoading().getLoadingLabel().setText("Connected!");
             vc.setLoginPanel();
+            vc.loadYearInfo();
         } else {
             vc.getLoading().getLoadingLabel().setText("Connection error");
         }
@@ -70,41 +65,6 @@ public class ProgramController {
         }
     }
 
-    public YearOverviewPanel[] getYears() {
-        String reqTemplate = """
-        SELECT Name, Fach
-        FROM FLAN_Themen
-        WHERE Jahrgang = %s
-        ORDER BY Fach
-        """;
-
-        dbc.executeStatement("SELECT DISTINCT Jahrgang FROM FLAN_Themen");
-        var years = dbc.getCurrentQueryResult().getData();
-        YearOverviewPanel[] yearPanels = new YearOverviewPanel[years.length];
-        for (int i = 0; i < years.length; i++) {
-            String year = years[i][0];
-
-            dbc.executeStatement(String.format(reqTemplate, year));
-            var data = dbc.getCurrentQueryResult().getData();
-
-            //dbc.executeStatement("SELECT DISTINCT Fach FROM FLAN_Themen");
-
-            List<Tuple<String, List<String>>> dataList = new ArrayList<>();
-            String currentSubject = null;
-            for (String[] datum : data) {
-                if (!datum[1].equals(currentSubject)) {
-                    currentSubject = datum[1];
-                    dataList.add(new Tuple<>(datum[1], new ArrayList<>()));
-                }
-                dataList.get(dataList.size() - 1).right().add(datum[0]);
-            }
-
-            yearPanels[i] = new YearOverviewPanel(year, dataList);
-        }
-
-        return yearPanels;
-    }
-
     public boolean isStringValid(String s) {
         return s.matches("[a-zA-Z0-9]+");
     }
@@ -115,5 +75,9 @@ public class ProgramController {
 
     public Schueler getSchueler() {
         return schueler;
+    }
+
+    public DatabaseController getDbc() {
+        return dbc;
     }
 }

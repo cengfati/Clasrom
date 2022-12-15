@@ -10,15 +10,14 @@ import java.util.Arrays;
 
 public class MainMenuPanel {
     private final ProgramController pc;
-    private final ViewController vc;
     private JPanel panel1;
     private JButton logOutButton;
     private JLabel loggedInAsLabel;
-    private JPanel panel;
+    private JPanel scrollPanel;
+    private JPanel iPanel;
 
     public MainMenuPanel(ViewController vc, ProgramController pc) {
         this.pc = pc;
-        this.vc = vc;
 
         logOutButton.addActionListener(e -> {
             pc.resetSchueler();
@@ -26,16 +25,18 @@ public class MainMenuPanel {
         });
     }
 
-    public JPanel getPanel() {
+    public void updateLabel() {
         loggedInAsLabel.setText("  Logged in as " + pc.getSchueler().getFirstName() + " " + pc.getSchueler().getLastName() + " (" + pc.getSchueler().getSid() + ")");
+    }
+
+    public JPanel getPanel() {
         return panel1;
     }
 
-    public void setPanel(YearOverviewPanel[] content) {
-        panel.setLayout(new GridLayout());
-        for (YearOverviewPanel pane : content) {
-            panel.add(pane.getPanel());
+    public void insertYearInfo(YearInfoPanel[] yearPanels) {
+        scrollPanel.setLayout(new BoxLayout(scrollPanel,BoxLayout.PAGE_AXIS));
+        for (YearInfoPanel panel : yearPanels) {
+            scrollPanel.add(panel.getPanel());
         }
     }
-
 }
