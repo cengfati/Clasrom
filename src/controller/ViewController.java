@@ -2,10 +2,11 @@ package controller;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import view.*;
-
+import view.TopicDetailsPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewController {
 
@@ -40,6 +41,8 @@ public class ViewController {
         pc.getDbc().executeStatement("""
                 SELECT Jahrgang, Fach, Name
                 FROM FLAN_Themen
+                JOIN FLAN_Faecher
+                ON FLAN_Themen.FID = FLAN_Faecher.FID
                 ORDER BY Jahrgang ASC, Fach
                 """);
         var dbcData = pc.getDbc().getCurrentQueryResult().getData();
@@ -48,8 +51,8 @@ public class ViewController {
         //For all topics
         for(String[] data : dbcData) {
             if(!currentYear.equals(data[0])) {
-                result.add(new YearInfoPanel(data[0],subjectList.toArray(new String[0][]))); //Create a new YearInfoPanel for every distinct year
-                currentYear = data[1]; //Update the year
+                result.add(new YearInfoPanel(data[0],subjectList.toArray(new String[0][]),this)); //Create a new YearInfoPanel for every distinct year
+                currentYear = data[0]; //Update the year
                 subjectList = new ArrayList<>(); //Recreate the arrayList with the subjects and topics
             }
             String[] tmp = {
@@ -95,5 +98,35 @@ public class ViewController {
     public void loadYearInfo() {
         mainMenu.insertYearInfo(getYearPanels());
         mainMenu.getPanel().revalidate();
+    }
+
+    public void setTopicDetails(String topic) {
+        frame.setContentPane(new TopicDetailsPanel(topic,getSubTopics(topic),this).getPanel());
+        frame.revalidate();
+    }
+
+    private String[][] getSubTopics(String topic) {
+        List<String[]> result = new ArrayList<>();
+
+        pc.getDbc().executeStatement("""
+                SELECT FLAN_Unterthemen.Name AS UnterName, Informationen
+                FROM FLAN_Unterthemen
+                JOIN FLAN_Themen
+                ON FLAN_Unterthemen.TID = FLAN_Themen.TID
+                WHERE FLAN_Themen.Name = \"""" + topic + """
+                " ORDER BY UnterName ASC
+                """);
+        var dbcData = pc.getDbc().getCurrentQueryResult().getData();
+
+        for(String[] data : dbcData) {
+            String[] tmp = {data[0], data[1]};
+            result.add(tmp);
+        }
+
+        return result.toArray(new String[0][0]);
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }

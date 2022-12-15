@@ -1,5 +1,7 @@
 package view;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import controller.ProgramController;
 import controller.ViewController;
 
@@ -14,6 +16,7 @@ public class LoginPanel {
     private JPanel panel;
     private JButton loginButton;
     private JLabel errorLabel;
+    private JCheckBox lightThemeCheckBox;
 
     public LoginPanel(ViewController vc, ProgramController pc) {
         errorLabel.setForeground(Color.RED);
@@ -22,6 +25,15 @@ public class LoginPanel {
             errorLabel.setText("");
             pc.login(usernameTextField.getText(), passwordPasswordField.getPassword());
         };
+
+        lightThemeCheckBox.addActionListener(e -> {
+            if(lightThemeCheckBox.isSelected()) {
+                FlatDarkLaf.setup();
+            } else {
+                FlatLightLaf.setup();
+            }
+            SwingUtilities.updateComponentTreeUI(vc.getFrame());
+        });
 
         loginButton.addActionListener(loginListener);
         passwordPasswordField.addActionListener(loginListener);

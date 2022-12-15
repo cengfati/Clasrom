@@ -1,5 +1,7 @@
 package view;
 
+import controller.ViewController;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,18 +11,14 @@ import java.util.ArrayList;
 
 public class YearInfoPanel {
     private JPanel panel1;
-    private JPanel iPanel;
     private JLabel headerLabel;
 
-    public YearInfoPanel(String year, String[][] data) {
+    public YearInfoPanel(String year, String[][] data, ViewController vc) {
         //Change header font and set text, set border colour for visibility
         headerLabel.setFont(new Font("", Font.PLAIN, 20));
-        headerLabel.setText(" Themen Klasse " + year);
+        headerLabel.setText("Themen Klasse " + year);
         panel1.setBorder(new LineBorder(Color.LIGHT_GRAY));
-
-        //Make the layout a GridLayout
         panel1.setLayout(new GridBagLayout());
-        //iPanel.setLayout(new GridBagLayout());
 
         //Create GridBagConstraints for the buttons
         GridBagConstraints c = new GridBagConstraints();
@@ -31,7 +29,7 @@ public class YearInfoPanel {
         //ActionListener for all the topic buttons
         ActionListener a = e -> {
             JButton button = (JButton) e.getSource();
-            //TODO Show topic details for the topic that is the source's button text
+            vc.setTopicDetails(button.getText());
         };
 
 
@@ -41,8 +39,7 @@ public class YearInfoPanel {
             if (!currentSubject.equals(loopData[0])) { //If not
                 currentSubject = loopData[0]; //Set subject to the next one
                 var newLabel = new Label(currentSubject);
-                newLabel.setFont(new Font("", Font.PLAIN, 15));
-                newLabel.setForeground(Color.GRAY);
+                newLabel.setFont(new Font("", Font.ITALIC, 15));
                 panel1.add(newLabel,c); //Add a new header with the new subject
             }
             //Add a button for every topic, with the ActionListener a

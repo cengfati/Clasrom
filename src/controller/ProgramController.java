@@ -19,13 +19,13 @@ public class ProgramController {
     }
 
     private void startProgram() {
-        vc.getLoading().getLoadingLabel().setText("Connecting...");
+        vc.getLoading().getLoadingLabel().setText("Verbinden...");
         if(dbc.connect()) {
-            vc.getLoading().getLoadingLabel().setText("Connected!");
+            vc.getLoading().getLoadingLabel().setText("Verbunden!");
             vc.setLoginPanel();
             vc.loadYearInfo();
         } else {
-            vc.getLoading().getLoadingLabel().setText("Connection error");
+            vc.getLoading().getLoadingLabel().setText("Verbindung fehlgeschlagen");
         }
     }
 
@@ -43,8 +43,10 @@ public class ProgramController {
             if(dataCorrect) {
                 vc.setMainMenu();
             } else {
-                vc.getLogin().getErrorLabel().setText("Wrong username or password");
+                vc.getLogin().getErrorLabel().setText("Falscher Benutzername oder Passwort");
             }
+        } else {
+            vc.getLogin().getErrorLabel().setText("Falscher Benutzername oder Passwort");
         }
     }
 
@@ -60,7 +62,7 @@ public class ProgramController {
                 schueler = new Schueler(firstName,lastName,sid);
                 vc.setMainMenu();
             } else {
-                vc.getSignUp().getErrorLabel().setText("You're already registered.");
+                vc.getSignUp().getErrorLabel().setText("Du bist bereits registriert");
             }
         }
     }

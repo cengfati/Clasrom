@@ -30,16 +30,16 @@ public class SignUpPanel {
                             errorLabel.setText("");
                             pc.signUp(firstNameTextField.getText(), lastNameTextField.getText(), passwordField1.getPassword());
                         } else {
-                            errorLabel.setText("Your password needs to be at least 5 letters long.");
+                            errorLabel.setText("Dein Passwort muss mindestens fünf Zeichen enthalten");
                         }
                     } else {
-                        errorLabel.setText("Invalid password. (Use letters A-z and numbers)");
+                        errorLabel.setText("Ungültiges Passwort (Benutze Buchstaben zwischen A-z und Zahlen)");
                     }
                 } else {
-                    errorLabel.setText("The passwords do not match.");
+                    errorLabel.setText("Die Passwörter stimmen nicht überein");
                 }
             } else {
-                errorLabel.setText("Please enter your name and a password");
+                errorLabel.setText("Bitte gebe deinen vollen Namen und ein Passwort ein");
             }
         };
 
