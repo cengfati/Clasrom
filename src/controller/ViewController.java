@@ -126,6 +126,15 @@ public class ViewController {
         return result.toArray(new String[0][0]);
     }
 
+    public void abgeschlossen(String subtopic, int value){
+        pc.getDbc().executeStatement("""
+                UPDATE FLAN_Abgeschlossen
+                SET FLAN_Abgeschlossen.abgeschlossen = """ + value + """
+                WHERE SID = """ + pc.getSchueler().getSid() + """
+                AND TID = """ + subtopic + """
+                """);
+    }
+
     public JFrame getFrame() {
         return frame;
     }

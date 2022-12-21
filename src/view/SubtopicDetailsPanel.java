@@ -1,5 +1,7 @@
 package view;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import controller.ViewController;
 
 import javax.swing.*;
@@ -18,6 +20,17 @@ public class SubtopicDetailsPanel {
         detailsTextPane.setText(details);
         detailsTextPane.setMinimumSize(new Dimension(700,0));
         detailsTextPane.setPreferredSize(new Dimension(vc.getFrame().getWidth(),0));
+
+        abgeschlossenCheckBox.addActionListener(e -> {
+            if(abgeschlossenCheckBox.isSelected()) {
+                vc.abgeschlossen(subtopicLabel.getText(),1);
+                System.out.println("Hallo");
+            } else {
+                vc.abgeschlossen(subtopicLabel.getText(), 0);
+                System.out.println("NEIN");
+            }
+
+        });
     }
 
     public JPanel getPanel() {
