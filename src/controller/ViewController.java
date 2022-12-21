@@ -109,7 +109,7 @@ public class ViewController {
         List<String[]> result = new ArrayList<>();
 
         pc.getDbc().executeStatement("""
-                SELECT FLAN_Unterthemen.Name AS UnterName, Informationen
+                SELECT FLAN_Unterthemen.UID AS UnterName, Informationen
                 FROM FLAN_Unterthemen
                 JOIN FLAN_Themen
                 ON FLAN_Unterthemen.TID = FLAN_Themen.TID
@@ -127,12 +127,33 @@ public class ViewController {
     }
 
     public void abgeschlossen(String subtopic, int value){
+        // Änderung von Wert in Datenbank
         pc.getDbc().executeStatement("""
                 UPDATE FLAN_Abgeschlossen
                 SET FLAN_Abgeschlossen.abgeschlossen = """ + value + """
                 WHERE SID = """ + pc.getSchueler().getSid() + """
-                AND TID = """ + subtopic + """
+                AND UID = """ + subtopic + """
                 """);
+    }
+
+    public boolean checkCheckBox(String subtopic){
+        boolean finished = false;
+
+        pc.getDbc().executeStatement("""
+                SELECT SID, UID, abgeschlossen
+                FROM FLAN_Abgeschlossen
+                WHERE SID = \"""" + pc.getSchueler().getSid() + """
+                "AND UID = \"""" + subtopic + "\""
+                );
+
+        System.out.println(pc.getDbc().getErrorMessage());
+        var result = pc.getDbc().getCurrentQueryResult().getData();
+
+        if(Integer.parseInt(result[0][3]) == 0){ //Ist basically result[0][3].equals("0")
+            finished = true;
+        }
+
+        return finished;
     }
 
     public JFrame getFrame() {

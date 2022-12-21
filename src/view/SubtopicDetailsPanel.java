@@ -14,6 +14,7 @@ public class SubtopicDetailsPanel {
     private JLabel subtopicLabel;
 
     public SubtopicDetailsPanel(String topic, String details, ViewController vc) {
+        abgeschlossenCheckBox.setSelected(vc.checkCheckBox(subtopicLabel.getText()));
         subtopicLabel.setText(topic);
         subtopicLabel.setFont(new Font("", Font.BOLD,15));
         detailsTextPane.setEditable(false);
@@ -24,10 +25,8 @@ public class SubtopicDetailsPanel {
         abgeschlossenCheckBox.addActionListener(e -> {
             if(abgeschlossenCheckBox.isSelected()) {
                 vc.abgeschlossen(subtopicLabel.getText(),1);
-                System.out.println("Hallo");
             } else {
                 vc.abgeschlossen(subtopicLabel.getText(), 0);
-                System.out.println("NEIN");
             }
 
         });
